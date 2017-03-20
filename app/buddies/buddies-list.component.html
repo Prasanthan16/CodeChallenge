@@ -1,0 +1,68 @@
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"> 
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-2 ont-size: large;'>Filter by:</div>
+            <div class='col-md-4'>
+                <input type='text' class="hudWidth" (keyup)="onFilter()" [(ngModel)]="filterBy"/>
+            </div>
+            <add-bud  [parentData]="filterData"></add-bud>
+        </div>
+    </div>
+    <template #buddyTemplate let-bud="item" let-index="index">
+        <accordion>
+            <accordion-group #group>
+            <div accordion-heading>
+                <i (click)="deleteBuddy(index)" class="glyphicon glyphicon-remove"></i>
+                {{bud.value.userName}}
+                <i class="pull-right float-xs-right glyphicon"
+                    [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+            </div>
+            <table  (click)="deleteBuddy(index)" class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>User Name:</th>
+                        <th>{{bud.value.userName}}</th>
+                    </tr>
+                    <tr>
+                        <th>First Name:</th>
+                        <th>{{bud.value.firstName}}</th>
+                    </tr>
+                    <tr *ngIf="bud.value.userName">
+                        <th>Status:</th>
+                        <th>{{bud.value.status}}</th>
+                    </tr>
+                    <tr>
+                        <th>Email Address:</th>
+                        <th>{{bud.value.emailId}}</th>
+                    </tr>
+                    <tr>
+                        <th>Date Of Birth:</th>
+                        <th>{{bud.value.DOB}}</th>
+                    </tr>
+                    <tr>
+                        <th>About Me:</th>
+                        <th>{{bud.value.BIO}}</th>
+                    </tr>
+                    <tr *ngIf="bud.value.status =='OFFLINE'">
+                        <th>Last Signed-In:</th>
+                        <th>{{bud.value.lastSignedIn}}</th>
+                    </tr>
+                    <tr>
+                        <th>User Name:</th>
+                        <th>{{bud.value.userName}}</th>
+                    </tr>
+                </tbody>
+            </table>
+        </accordion-group>
+        </accordion>
+    </template> 
+    <bs-sortable 
+        [(ngModel)]="filterData"
+        [itemTemplate]="buddyTemplate"
+        itemClass="sortable-item"
+        itemActiveClass="sortable-item-active"
+        placeholderItem="Drag here"
+        placeholderClass="placeholderStyle"
+        wrapperClass="sortable-wrapper"
+    ></bs-sortable>  
+</div>
