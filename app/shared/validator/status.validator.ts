@@ -1,8 +1,8 @@
 import { FormControl } from '@angular/forms';
 
 export function ProperStatus(control: FormControl)  {
-  var statusReg = /^((IDLE)|(OFFLINE)|(BUSY)|(AVAILABLE)) $/;
-  if (control.value && !statusReg.test(control.value)) {
+  var statusArray = ["IDLE", "OFFLINE", "BUSY", "AVAILABLE", "AWAY"];
+  if (control.value && statusArray.indexOf(control.value.toUpperCase()) === -1) {
     return { invalidStatus: true };
   } 
 }

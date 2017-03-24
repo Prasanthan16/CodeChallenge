@@ -5,7 +5,7 @@
             <div class='col-md-4'>
                 <input type='text' class="hudWidth" (keyup)="onFilter()" [(ngModel)]="filterBy"/>
             </div>
-            <add-bud  [parentData]="filterData"></add-bud>
+            <add-bud  [parentData]="filterData" (onAdd)="filterData=$event;buddies=$event"></add-bud>
         </div>
     </div>
     <template #buddyTemplate let-bud="item" let-index="index">
@@ -14,10 +14,13 @@
             <div accordion-heading>
                 <i (click)="deleteBuddy(index)" class="glyphicon glyphicon-remove"></i>
                 {{bud.value.userName}}
+                <rating [(ngModel)]="bud.value.star" [max]="max" [readonly]="isReadonly"
+                    (onHover)="hoveringOver($event)" (onLeave)="resetStar()"
+                    [titles]="['one','two','three']"></rating>
                 <i class="pull-right float-xs-right glyphicon"
                     [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
             </div>
-            <table  (click)="deleteBuddy(index)" class="table table-striped">
+            <table   class="table table-striped">
                 <tbody>
                     <tr>
                         <th>User Name:</th>
@@ -29,7 +32,7 @@
                     </tr>
                     <tr *ngIf="bud.value.userName">
                         <th>Status:</th>
-                        <th>{{bud.value.status}}</th>
+                        <th>{{bud.value.status.toUpperCase()}}</th>
                     </tr>
                     <tr>
                         <th>Email Address:</th>
@@ -39,11 +42,11 @@
                         <th>Date Of Birth:</th>
                         <th>{{bud.value.DOB}}</th>
                     </tr>
-                    <tr>
-                        <th>About Me:</th>
+                    <tr *ngIf="bud.value.BIO">
+                        <th >About Me:</th>
                         <th>{{bud.value.BIO}}</th>
                     </tr>
-                    <tr *ngIf="bud.value.status =='OFFLINE'">
+                    <tr *ngIf="bud.value.lastSignedIn && bud.value.status =='OFFLINE'">
                         <th>Last Signed-In:</th>
                         <th>{{bud.value.lastSignedIn}}</th>
                     </tr>

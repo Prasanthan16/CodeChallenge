@@ -1,6 +1,4 @@
-<!--<button type="button" class="btn btn-primary pull-right" (click)="staticModal.show()">Add Buddy !</button>-->
-
-<button class="btn btn-primary pull-right" (click)="lgModal.show()">Add Buddy !</button>
+<button class="btn btn-primary pull-right" (click)="clearDate();">Add Buddy !</button>
  
 <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" 
   aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -16,7 +14,8 @@
         <div class="jumbotron">
     <h2>Add Buddy</h2>
     <form [formGroup]="budForm" (ngSubmit)="submitForm(budForm.value)">
-      <div class="form-group" [ngClass]="{'has-success':budForm.controls['userName'].valid,'has-danger':(!budForm.controls['userName'].valid 
+      <div class="form-group" [ngClass]="{'has-success':budForm.controls['userName'].valid,
+        'has-danger':(!budForm.controls['userName'].valid 
         &&  budForm.controls['userName'].touched)}">
         <label class="form-control-label" for="userName">User Name:</label>
         <input type="text" [formControl]="budForm.controls['userName']"
@@ -24,34 +23,41 @@
           class="form-control form-control-success" id="userName" placeholder="Enter your User Name">
         <small class="form-text text-muted is-error"  *ngIf="budForm.controls['userName'].hasError('required') 
           && budForm.controls['userName'].touched" >You must Enter a UserName.</small>
+          <small class="form-text text-muted is-error"  *ngIf="budForm.controls['emailId'].touched 
+            && budForm.controls['userName'].hasError('invalidEmail')" >Email Id is not Valid</small>
       </div>
 
-      <div class="form-group" [ngClass]="{'has-success':budForm.controls['emailId'].valid,'has-danger':(!budForm.controls['emailId'].valid 
+      <div class="form-group" [ngClass]="{'has-success':budForm.controls['emailId'].valid,
+            'has-danger':(!budForm.controls['emailId'].valid 
             &&  budForm.controls['emailId'].touched)}">
         <label class="form-control-label" for="emailId">Email ID:</label>
         <input type="text" [formControl]="budForm.controls['emailId']"
           [ngClass]="{'form-control-success':budForm.controls['emailId'].valid}" 
           class="form-control form-control-success" id="emailId" placeholder="Email ID">
-          <small class="form-text text-muted is-error"  *ngIf="budForm.controls['emailId'].hasError('minlength') 
-          && budForm.controls['emailId'].touched && budForm.controls['birthday'].hasError('invalidEmail')" >Enter a valid Email ID.</small>
+          <small class="form-text text-muted is-error"  *ngIf="budForm.controls['emailId'].hasError('required') 
+          && budForm.controls['emailId'].touched" >You must Enter a Valid Email ID.</small>
+          <small class="form-text text-muted is-error"  *ngIf="budForm.controls['emailId'].touched 
+            && budForm.controls['emailId'].hasError('invalidEmail')" >Email Id is not Valid</small>
       </div>
 
-      <div class="form-group" [ngClass]="{'has-success':((!budForm.controls['status'].touched) 
-            && budForm.controls['status'].valid 
-            && budForm.hasError('status')),'has-danger':(budForm.hasError('status') 
-            && budForm.controls['status'].touched)}">
+      <div class="form-group" [ngClass]="{'has-success':budForm.controls['status'].valid,
+            'has-danger':(!budForm.controls['status'].valid 
+            &&  budForm.controls['status'].touched)}">
         <label class="form-control-label" for="status">Status:</label>
-        <input type="text" [formControl]="budForm.controls['status']"
-          [ngClass]="{'form-control-success':!budForm.hasError('status')}" 
-          class="form-control form-control-success" id="status" placeholder="status">
-        <small class="form-text text-muted is-error"  *ngIf="budForm.hasError('status')
-          && budForm.controls['status'].touched" >Invalid staus.</small>
+        <input type="text" #stat [formControl]="budForm.controls['status']" (change)="stat.value = stat.value.toUpperCase()"
+          [ngClass]="{'form-control-success':budForm.controls['status'].valid}" 
+          class="form-control form-control-success" id="status" placeholder="Enter status in all caps">
+        <small class="form-text text-muted is-error"  *ngIf="budForm.controls['status'].hasError('required') 
+          && budForm.controls['status'].touched" >You must Enter a Valid STATUS.</small>
+        <small class="form-text text-muted is-error"  *ngIf="budForm.controls['status'].touched 
+            && budForm.controls['status'].hasError('invalidStatus')" >
+            Enter a valid status (e.g. [IDEL, OFFLINE, AVAILABLE, BUSY, AWAY]).</small>
       </div>
 
       <div class="form-group" [ngClass]="{'has-success':budForm.controls['firstName'].valid,'has-danger':(!budForm.controls['firstName'].valid 
       &&  budForm.controls['firstName'].touched)}">
         <label class="form-control-label" for="firstName">First Name:</label>
-        <input type="text" [formControl]="budForm.controls['firstName']"
+        <input type="text" (keypress)="onlyText($event)" [formControl]="budForm.controls['firstName']"
           [ngClass]="{'form-control-success':budForm.controls['firstName'].valid}" 
           class="form-control form-control-success" id="firstName" placeholder="First Name">
         <small class="form-text text-muted is-error"  *ngIf="budForm.controls['firstName'].hasError('required') 
@@ -61,22 +67,21 @@
        <div class="form-group" [ngClass]="{'has-success':budForm.controls['lastName'].valid,'has-danger':(!budForm.controls['lastName'].valid 
       &&  budForm.controls['lastName'].touched)}">
         <label class="form-control-label" for="lastName">Last Name:</label>
-        <input type="text" [formControl]="budForm.controls['lastName']"
+        <input type="text" (keypress)="onlyText($event)" [formControl]="budForm.controls['lastName']"
           [ngClass]="{'form-control-success':budForm.controls['lastName'].valid}" 
           class="form-control form-control-success" id="lastName" placeholder="First Name">
         <small class="form-text text-muted is-error"  *ngIf="budForm.controls['lastName'].hasError('required') 
           && budForm.controls['lastName'].touched" >You must Enter a Last Name.</small>
       </div>
 
-      <div class="form-group" [ngClass]="{'has-success':budForm.controls['birthday'].valid,'has-danger':(!budForm.controls['birthday'].valid 
-      &&  budForm.controls['birthday'].touched)}">
-        <label class="form-control-label" for="birthday">Birthday:</label>
-        <input type="text" [formControl]="budForm.controls['birthday']"
-          [ngClass]="{'form-control-success':budForm.controls['birthday'].valid}" 
-          class="form-control form-control-success" id="birthday" placeholder="MM/DD/YYYY">
-        <small class="form-text text-muted is-error"  *ngIf="budForm.controls['birthday'].hasError('required') 
+      <div class="form-group" [ngClass]="{'has-success':budForm.controls['birthday'].valid,
+          'has-danger':(!budForm.controls['birthday'].valid 
+          &&  budForm.controls['birthday'].touched)}">
+         <label class="form-control-label" for="birthday">Birthday:</label>
+         <my-date-picker name="birthday" [options]="birthdayPickerOptions" formControlName="birthday"></my-date-picker>
+         <small class="form-text text-muted is-error"  *ngIf="budForm.controls['birthday'].hasError('required')
           && budForm.controls['birthday'].touched" >You must Enter a Date.</small>
-        <small class="form-text text-muted is-error"  *ngIf="budForm.controls['birthday'].touched 
+         <small class="form-text text-muted is-error"  *ngIf="budForm.controls['birthday'].touched 
           && budForm.controls['birthday'].hasError('invalidDate')">Enter a Proper Date.</small>
       </div>
 

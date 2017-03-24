@@ -7,5 +7,6 @@ export interface IBuddy {
     emailId: string,
     DOB: string,
     BIO: string,
+    star: number,
     lastSignedIn: string
 }

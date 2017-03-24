@@ -11,7 +11,9 @@ import { BuddiesListComponent } from './buddies/buddies-list.components';
 import { StatusDirective } from './shared/status/status.directive';
 import { StatusComponent } from './shared/status/status.component';
 import {AddBudComponent} from './buddies/add-buddy.component';
-import { AccordionModule, SortableModule, ModalModule , DropdownModule} from 'ng2-bootstrap';
+import { MyDatePickerModule } from 'mydatepicker';
+//import { StringOnlyPipe } from './shared/customPipe/string-only.pipe';
+import { AccordionModule, SortableModule, ModalModule , DropdownModule, RatingModule} from 'ng2-bootstrap';
 
 
 @NgModule({
@@ -20,9 +22,11 @@ import { AccordionModule, SortableModule, ModalModule , DropdownModule} from 'ng
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
+    MyDatePickerModule,
     DropdownModule.forRoot(),
     AccordionModule.forRoot(),
     SortableModule.forRoot(),
+    RatingModule.forRoot(),
     ModalModule.forRoot(),
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
@@ -33,6 +37,7 @@ import { AccordionModule, SortableModule, ModalModule , DropdownModule} from 'ng
     ])
   ],
   declarations: [
+   // StringOnlyPipe,
     AppComponent,
     StatusDirective,
     StatusComponent,

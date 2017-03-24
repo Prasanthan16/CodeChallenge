@@ -18,6 +18,8 @@ var buddies_list_components_1 = require("./buddies/buddies-list.components");
 var status_directive_1 = require("./shared/status/status.directive");
 var status_component_1 = require("./shared/status/status.component");
 var add_buddy_component_1 = require("./buddies/add-buddy.component");
+var mydatepicker_1 = require("mydatepicker");
+//import { StringOnlyPipe } from './shared/customPipe/string-only.pipe';
 var ng2_bootstrap_1 = require("ng2-bootstrap");
 var AppModule = (function () {
     function AppModule() {
@@ -31,9 +33,11 @@ AppModule = __decorate([
             http_1.HttpModule,
             forms_1.FormsModule,
             forms_1.ReactiveFormsModule,
+            mydatepicker_1.MyDatePickerModule,
             ng2_bootstrap_1.DropdownModule.forRoot(),
             ng2_bootstrap_1.AccordionModule.forRoot(),
             ng2_bootstrap_1.SortableModule.forRoot(),
+            ng2_bootstrap_1.RatingModule.forRoot(),
             ng2_bootstrap_1.ModalModule.forRoot(),
             router_1.RouterModule.forRoot([
                 { path: 'welcome', component: welcome_component_1.WelcomeComponent },
@@ -44,6 +48,7 @@ AppModule = __decorate([
             ])
         ],
         declarations: [
+            // StringOnlyPipe,
             app_component_1.AppComponent,
             status_directive_1.StatusDirective,
             status_component_1.StatusComponent,

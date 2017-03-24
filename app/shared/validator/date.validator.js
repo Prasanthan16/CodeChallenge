@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function DateValidator(control) {
-    var dateRegexp = /(0[1-9]|1[012])[- \/.](0[1-9]|[12][0-9]|3[01])[- \/.](19|20)\d\d/;
-    if (control.value && !dateRegexp.test(control.value)) {
+    var dateRegexp = /(0[1-9]|1[012])[- \/.](0[1-9]|[12][0-9]|3[01])[- \/.](19|20)\d\d/, formattedDate = control.value ? control.value.formatted : "";
+    if (!dateRegexp.test(formattedDate)) {
         return { invalidDate: true };
     }
-    else if (dateRegexp.test(control.value)) {
-        var userDate = new Date(control.value);
+    else if (dateRegexp.test(formattedDate)) {
+        var userDate = new Date(formattedDate);
         var currentDate = new Date(), yearsConvertor = 31536000000;
         if (currentDate < userDate) {
             return { invalidDate: true };
