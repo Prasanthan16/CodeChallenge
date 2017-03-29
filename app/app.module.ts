@@ -13,7 +13,7 @@ import { StatusComponent } from './shared/status/status.component';
 import {AddBudComponent} from './buddies/add-buddy.component';
 import { MyDatePickerModule } from 'mydatepicker';
 //import { StringOnlyPipe } from './shared/customPipe/string-only.pipe';
-import { AccordionModule, SortableModule, ModalModule , DropdownModule, RatingModule} from 'ng2-bootstrap';
+import { AccordionModule, SortableModule, ModalModule , RatingModule} from 'ng2-bootstrap'; // DropdownModule,
 
 
 @NgModule({
@@ -23,7 +23,7 @@ import { AccordionModule, SortableModule, ModalModule , DropdownModule, RatingMo
     FormsModule,
     ReactiveFormsModule,
     MyDatePickerModule,
-    DropdownModule.forRoot(),
+    //DropdownModule.forRoot(),
     AccordionModule.forRoot(),
     SortableModule.forRoot(),
     RatingModule.forRoot(),

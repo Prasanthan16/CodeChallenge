@@ -43,7 +43,6 @@ var SignUpComponent = (function () {
         this.sub.unsubscribe();
     };
     SignUpComponent.prototype.setDate = function () {
-        // Set today date using the setValue function
         var date = new Date();
         this.signUpForm.setValue({ birthday: {
                 date: {
@@ -54,7 +53,6 @@ var SignUpComponent = (function () {
             } });
     };
     SignUpComponent.prototype.clearDate = function () {
-        // Clear the date using the setValue function
         this.signUpForm.setValue({ birthday: '' });
     };
     SignUpComponent.prototype.onlyText = function (evt) {

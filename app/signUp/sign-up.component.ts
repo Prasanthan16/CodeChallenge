@@ -39,7 +39,6 @@ export class SignUpComponent implements OnInit{
         },{validator: MatchingPasswords('password', 'confirmPassword')});
     }
     setDate(): void {
-        // Set today date using the setValue function
         let date = new Date();
         this.signUpForm.setValue({birthday: {
         date: {
@@ -49,7 +48,6 @@ export class SignUpComponent implements OnInit{
         }});
     }
     clearDate(): void {
-        // Clear the date using the setValue function
         this.signUpForm.setValue({birthday: ''});
     }
     onlyText(evt: any) {

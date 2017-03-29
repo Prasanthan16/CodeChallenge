@@ -20,7 +20,7 @@ var status_component_1 = require("./shared/status/status.component");
 var add_buddy_component_1 = require("./buddies/add-buddy.component");
 var mydatepicker_1 = require("mydatepicker");
 //import { StringOnlyPipe } from './shared/customPipe/string-only.pipe';
-var ng2_bootstrap_1 = require("ng2-bootstrap");
+var ng2_bootstrap_1 = require("ng2-bootstrap"); // DropdownModule,
 var AppModule = (function () {
     function AppModule() {
     }
@@ -34,7 +34,7 @@ AppModule = __decorate([
             forms_1.FormsModule,
             forms_1.ReactiveFormsModule,
             mydatepicker_1.MyDatePickerModule,
-            ng2_bootstrap_1.DropdownModule.forRoot(),
+            //DropdownModule.forRoot(),
             ng2_bootstrap_1.AccordionModule.forRoot(),
             ng2_bootstrap_1.SortableModule.forRoot(),
             ng2_bootstrap_1.RatingModule.forRoot(),

@@ -10,6 +10,7 @@ exports.BUDDIES = [
         "emailId": "lol@yo.com",
         "DOB": "06/22/1983",
         "BIO": "I am Cool",
+        "star": 2,
         "lastSignedIn": "March 19, 2016"
     },
     {
@@ -21,6 +22,7 @@ exports.BUDDIES = [
         "emailId": "WOWl@yo.com",
         "DOB": "06/22/1953",
         "BIO": "I am exited",
+        "star": 5,
         "lastSignedIn": "March 19, 2016"
     },
     {
@@ -32,6 +34,7 @@ exports.BUDDIES = [
         "emailId": "lol@yo.com",
         "DOB": "06/22/1983",
         "BIO": "I am FUN",
+        "star": 4,
         "lastSignedIn": "March 19, 2016"
     },
     {
@@ -43,6 +46,7 @@ exports.BUDDIES = [
         "emailId": "lol@yo.com",
         "DOB": "06/22/1983",
         "BIO": "I am Cool",
+        "star": 3,
         "lastSignedIn": "March 19, 2016"
     }
 ];
