@@ -61,6 +61,7 @@ export class CommonFormComponet implements OnInit{
     }
     clearDate(): void {
         this.commonFormGroup.setValue({userName:'', emailId:'', status:'', firstName:'', lastName:'', birthday: ''});
+        this.commonFormGroup.reset();
     }
     onFormSubmit(value: any):void {
         this.onEnd.emit(value);
