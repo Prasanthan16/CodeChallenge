@@ -15,25 +15,39 @@ var status_validator_1 = require("../validator/status.validator");
 var email_validator_1 = require("../validator/email.validator");
 var date_validator_1 = require("../validator/date.validator");
 var password_validator_1 = require("../validator/password.validator");
-var AddBudComponent = (function () {
-    function AddBudComponent(fb) {
+var router_1 = require("@angular/router");
+var enum_form_1 = require("../enums/enum-form");
+var CommonFormComponet = (function () {
+    function CommonFormComponet(fb, router, route) {
+        this.router = router;
+        this.route = route;
+        this.onEnd = new core_1.EventEmitter();
         this.birthdayPickerOptions = {
             dateFormat: 'mm/dd/yyyy',
             alignSelectorRight: true
         };
-        this.onAdd = new core_1.EventEmitter();
-        this.budForm = fb.group({
+        this.commonFormGroup = fb.group({
             'userName': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.maxLength(56), email_validator_1.EmailValidator])],
-            'emailId': [null, forms_1.Validators.compose([forms_1.Validators.required, email_validator_1.EmailValidator])],
-            'password': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(6)])],
-            'confirmPassword': [null, forms_1.Validators.required],
-            'status': [null, forms_1.Validators.compose([forms_1.Validators.required, status_validator_1.ProperStatus])],
             'firstName': [null, forms_1.Validators.required],
             'lastName': [null, forms_1.Validators.required],
             'birthday': [null, forms_1.Validators.compose([forms_1.Validators.required, date_validator_1.DateValidator])]
-        }, { validator: password_validator_1.MatchingPasswords('password', 'confirmPassword') });
+        });
     }
-    AddBudComponent.prototype.onlyText = function (evt) {
+    CommonFormComponet.prototype.ngOnInit = function () {
+        console.log("there");
+        if (this.formLable === enum_form_1.FORM_TYPE.SIGN_IN) {
+            this.commonFormGroup.addControl("password", new forms_1.FormControl(null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(6)])));
+            this.commonFormGroup.addControl("confirmPassword", new forms_1.FormControl(null, forms_1.Validators.required));
+            this.commonFormGroup.setValidators(password_validator_1.MatchingPasswords('password', 'confirmPassword'));
+            this.signIn = true;
+        }
+        else if (this.formLable === enum_form_1.FORM_TYPE.BUDDY) {
+            this.commonFormGroup.addControl("emailId", new forms_1.FormControl(null, forms_1.Validators.compose([forms_1.Validators.required, email_validator_1.EmailValidator])));
+            this.commonFormGroup.addControl("status", new forms_1.FormControl(null, forms_1.Validators.compose([forms_1.Validators.required, status_validator_1.ProperStatus])));
+            this.buddy = true;
+        }
+    };
+    CommonFormComponet.prototype.onlyText = function (evt) {
         var keyCode = (evt.which) ? evt.which : evt.keyCode;
         if ((keyCode < 65 || keyCode > 90) && (keyCode < 97 || keyCode > 123) && keyCode != 32) {
             return false;
@@ -42,36 +56,44 @@ var AddBudComponent = (function () {
             return true;
         }
     };
-    AddBudComponent.prototype.clearDate = function () {
-        this.budForm.setValue({ userName: '', emailId: '', password: "", status: '', firstName: '', lastName: '', birthday: '' });
-        this.lgModal.show();
+    CommonFormComponet.prototype.clearDate = function () {
+        this.commonFormGroup.setValue({ userName: '', emailId: '', status: '', firstName: '', lastName: '', birthday: '' });
     };
-    AddBudComponent.prototype.submitForm = function (value) {
-        value["DOB"] = value.birthday.formatted;
-        this.parentData = this.parentData.concat(value);
-        this.onAdd.emit(this.parentData);
-        this.lgModal.hide();
+    CommonFormComponet.prototype.onFormSubmit = function (value) {
+        this.onEnd.emit(value);
     };
-    return AddBudComponent;
+    return CommonFormComponet;
 }());
 __decorate([
     core_1.Input(),
+    __metadata("design:type", Object)
+], CommonFormComponet.prototype, "formLable", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], CommonFormComponet.prototype, "onSubmit", void 0);
+__decorate([
+    core_1.Input(),
     __metadata("design:type", Array)
-], AddBudComponent.prototype, "parentData", void 0);
+], CommonFormComponet.prototype, "parentData", void 0);
 __decorate([
     core_1.ViewChild('lgModal'),
     __metadata("design:type", Object)
-], AddBudComponent.prototype, "lgModal", void 0);
+], CommonFormComponet.prototype, "lgModal", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], CommonFormComponet.prototype, "confirm", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], AddBudComponent.prototype, "onAdd", void 0);
-AddBudComponent = __decorate([
+], CommonFormComponet.prototype, "onEnd", void 0);
+CommonFormComponet = __decorate([
     core_1.Component({
         selector: 'user-form',
-        templateUrl: 'app/shared/forms/user-detail.component.html'
+        templateUrl: 'app/shared/forms/user-detail.componet.html'
     }),
-    __metadata("design:paramtypes", [forms_1.FormBuilder])
-], AddBudComponent);
-exports.AddBudComponent = AddBudComponent;
+    __metadata("design:paramtypes", [forms_1.FormBuilder, router_1.Router, router_1.ActivatedRoute])
+], CommonFormComponet);
+exports.CommonFormComponet = CommonFormComponet;
 //# sourceMappingURL=user-detail.componet.js.map

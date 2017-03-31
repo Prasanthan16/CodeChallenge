@@ -14,6 +14,7 @@ var buddy_http_service_1 = require("../service/buddy/buddy.http.service");
 var BuddiesListComponent = (function () {
     function BuddiesListComponent(_buddyService) {
         this._buddyService = _buddyService;
+        this.callForm = "Buddy";
         this.max = 5;
         this.isReadonly = false;
     }
@@ -25,6 +26,11 @@ var BuddiesListComponent = (function () {
     ;
     BuddiesListComponent.prototype.resetStar = function () {
         this.overStar = void 0;
+    };
+    BuddiesListComponent.prototype.callAccordion = function (event) {
+        if (event.target.id == "" && event.target.id !== "parent") {
+            event.stopPropagation();
+        }
     };
     BuddiesListComponent.prototype.deleteBuddy = function (index) {
         var tmp = Object.create(this.filterData);

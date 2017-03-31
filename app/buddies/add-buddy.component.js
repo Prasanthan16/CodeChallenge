@@ -10,40 +10,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var forms_1 = require("@angular/forms");
-var status_validator_1 = require("../shared/validator/status.validator");
-var email_validator_1 = require("../shared/validator/email.validator");
-var date_validator_1 = require("../shared/validator/date.validator");
+var enum_form_1 = require("../shared/enums/enum-form");
 var AddBudComponent = (function () {
-    function AddBudComponent(fb) {
-        this.birthdayPickerOptions = {
-            dateFormat: 'mm/dd/yyyy',
-            alignSelectorRight: true
-        };
+    function AddBudComponent() {
+        this.callForm = enum_form_1.FORM_TYPE.BUDDY;
         this.onAdd = new core_1.EventEmitter();
-        this.budForm = fb.group({
-            'userName': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.maxLength(56), email_validator_1.EmailValidator])],
-            'emailId': [null, forms_1.Validators.compose([forms_1.Validators.required, email_validator_1.EmailValidator])],
-            'status': [null, forms_1.Validators.compose([forms_1.Validators.required, status_validator_1.ProperStatus])],
-            'firstName': [null, forms_1.Validators.required],
-            'lastName': [null, forms_1.Validators.required],
-            'birthday': [null, forms_1.Validators.compose([forms_1.Validators.required, date_validator_1.DateValidator])]
-        });
     }
-    AddBudComponent.prototype.onlyText = function (evt) {
-        var keyCode = (evt.which) ? evt.which : evt.keyCode;
-        if ((keyCode < 65 || keyCode > 90) && (keyCode < 97 || keyCode > 123) && keyCode != 32) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    };
-    AddBudComponent.prototype.clearDate = function () {
-        this.budForm.setValue({ userName: '', emailId: '', status: '', firstName: '', lastName: '', birthday: '' });
+    AddBudComponent.prototype.showBuddy = function () {
         this.lgModal.show();
+        this.userForm.clearDate();
     };
-    AddBudComponent.prototype.submitForm = function (value) {
+    AddBudComponent.prototype.callAccordion = function (event) {
+        this.accordian.toggleOpen(event);
+    };
+    AddBudComponent.prototype.onEnd = function (value) {
         value["DOB"] = value.birthday.formatted;
         this.parentData = this.parentData.concat(value);
         this.onAdd.emit(this.parentData);
@@ -56,19 +36,31 @@ __decorate([
     __metadata("design:type", Array)
 ], AddBudComponent.prototype, "parentData", void 0);
 __decorate([
-    core_1.ViewChild('lgModal'),
-    __metadata("design:type", Object)
-], AddBudComponent.prototype, "lgModal", void 0);
+    core_1.Input(),
+    __metadata("design:type", String)
+], AddBudComponent.prototype, "formLable", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
 ], AddBudComponent.prototype, "onAdd", void 0);
+__decorate([
+    core_1.ViewChild('lgModal'),
+    __metadata("design:type", Object)
+], AddBudComponent.prototype, "lgModal", void 0);
+__decorate([
+    core_1.ViewChild('userForm'),
+    __metadata("design:type", Object)
+], AddBudComponent.prototype, "userForm", void 0);
+__decorate([
+    core_1.ViewChild('group'),
+    __metadata("design:type", Object)
+], AddBudComponent.prototype, "accordian", void 0);
 AddBudComponent = __decorate([
     core_1.Component({
         selector: 'add-bud',
         templateUrl: 'app/buddies/add-buddy.component.html'
     }),
-    __metadata("design:paramtypes", [forms_1.FormBuilder])
+    __metadata("design:paramtypes", [])
 ], AddBudComponent);
 exports.AddBudComponent = AddBudComponent;
 //# sourceMappingURL=add-buddy.component.js.map

@@ -5,18 +5,18 @@
             <div class='col-md-4'>
                 <input type='text' class="hudWidth" (keyup)="onFilter()" [(ngModel)]="filterBy"/>
             </div>
-            <add-bud  [parentData]="filterData" (onAdd)="filterData=$event;buddies=$event"></add-bud>
+            <add-bud  [parentData]="filterData"  [formLable]="'buddy'" (onAdd)="filterData=$event;buddies=$event"></add-bud>
         </div>
     </div>
     <template #buddyTemplate let-bud="item" let-index="index">
         <accordion>
-            <accordion-group #group>
-            <div accordion-heading>
+            <accordion-group #group >
+            <div accordion-heading id="parent" (click)="callAccordion($event)">
                 <i (click)="deleteBuddy(index)" class="glyphicon glyphicon-remove"></i>
                 {{bud.value.userName}}
-                <rating [(ngModel)]="bud.value.star" [max]="max" [readonly]="isReadonly"
+                <rating id="child" [(ngModel)]="bud.value.star" [max]="max" [readonly]="isReadonly"
                     (onHover)="hoveringOver($event)" (onLeave)="resetStar()"
-                    [titles]="['one','two','three']"></rating>
+                    [titles]="['one','two','three', 'four','five']"></rating>
                 <i class="pull-right float-xs-right glyphicon"
                     [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
             </div>

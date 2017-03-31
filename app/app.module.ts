@@ -11,6 +11,7 @@ import { BuddiesListComponent } from './buddies/buddies-list.components';
 import { StatusDirective } from './shared/status/status.directive';
 import { StatusComponent } from './shared/status/status.component';
 import {AddBudComponent} from './buddies/add-buddy.component';
+import {CommonFormComponet} from './shared/forms/user-detail.componet';
 import { MyDatePickerModule } from 'mydatepicker';
 //import { StringOnlyPipe } from './shared/customPipe/string-only.pipe';
 import { AccordionModule, SortableModule, ModalModule , RatingModule} from 'ng2-bootstrap'; // DropdownModule,
@@ -44,6 +45,7 @@ import { AccordionModule, SortableModule, ModalModule , RatingModule} from 'ng2-
     WelcomeComponent,
     SignUpComponent,
     AddBudComponent,
+    CommonFormComponet,
     BuddiesListComponent
   ],
   bootstrap: [ AppComponent ]

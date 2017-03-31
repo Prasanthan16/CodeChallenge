@@ -1,66 +1,104 @@
-<div class="jumbotron">
-    <h2>Sign Up !!!</h2>
-    <form [formGroup]="signUpForm" (ngSubmit)="submitForm(signUpForm.value)">
-      <div class="form-group" [ngClass]="{'has-success':signUpForm.controls['userName'].valid,'has-danger':(!signUpForm.controls['userName'].valid &&  signUpForm.controls['userName'].touched)}">
+<div>
+    <form [formGroup]="commonFormGroup" (ngSubmit)="onFormSubmit(commonFormGroup.value)">
+      <div class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['userName'].valid,'has-danger':(!commonFormGroup.controls['userName'].valid &&  commonFormGroup.controls['userName'].touched)}">
         <label class="form-control-label" for="userName">User Name:</label>
-        <input type="text" [formControl]="signUpForm.controls['userName']"
-          [ngClass]="{'form-control-success':signUpForm.controls['userName'].valid}" 
+        <input type="text" [formControl]="commonFormGroup.controls['userName']"
+          [ngClass]="{'form-control-success':commonFormGroup.controls['userName'].valid}" 
           class="form-control form-control-success" id="userName" placeholder="Enter your User Name (example@mail.com)">
-        <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['userName'].hasError('required') 
-          && signUpForm.controls['userName'].touched" >You must Enter a UserName.</small>
-        <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['userName'].hasError('invalidEmail') 
-          && signUpForm.controls['userName'].touched" >Username should a valid Email ID</small>
+        <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['userName'].hasError('required') 
+          && commonFormGroup.controls['userName'].touched" >You must Enter a UserName.</small>
+        <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['userName'].hasError('invalidEmail') 
+          && commonFormGroup.controls['userName'].touched" >Username should a valid Email ID</small>
       </div>
 
-      <div class="form-group" [ngClass]="{'has-success':signUpForm.controls['password'].valid,'has-danger':(!signUpForm.controls['password'].valid &&  signUpForm.controls['password'].touched)}">
+      <div *ngIf="signIn" class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['password'].valid,
+      'has-danger':(!commonFormGroup.controls['password'].valid &&  commonFormGroup.controls['password'].touched)}">
         <label class="form-control-label" for="password">Password:</label>
-        <input type="password" [formControl]="signUpForm.controls['password']" 
-          [ngClass]="{'form-control-success':signUpForm.controls['password'].valid}" 
+        <input type="password" [formControl]="commonFormGroup.controls['password']" 
+          [ngClass]="{'form-control-success':commonFormGroup.controls['password'].valid}" 
           class="form-control form-control-success" id="password" placeholder="Password">
-        <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['password'].hasError('required') 
-          && signUpForm.controls['password'].touched" >You must Enter a password.</small>
-          <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['password'].hasError('minlength') 
-          && signUpForm.controls['password'].touched" >Password should be atleast six character.</small>
+        <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['password'].hasError('required') 
+          && commonFormGroup.controls['password'].touched" >You must Enter a password.</small>
+          <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['password'].hasError('minlength') 
+          && commonFormGroup.controls['password'].touched" >Password should be atleast six character.</small>
       </div>
 
-      <div class="form-group" [ngClass]="{'has-success':((!signUpForm.controls['confirmPassword'].touched) && signUpForm.controls['confirmPassword'].valid && signUpForm.hasError('mismatchedPasswords')),'has-danger':(signUpForm.hasError('mismatchedPasswords') &&  signUpForm.controls['confirmPassword'].touched)}">
+      <div *ngIf="signIn" class="form-group" [ngClass]="{'has-success':(commonFormGroup.controls['confirmPassword'].valid),
+      'has-danger':(!commonFormGroup.controls['confirmPassword'].valid
+        &&  commonFormGroup.controls['confirmPassword'].touched)}">
         <label class="form-control-label" for="confirmPassword">Confirm Password:</label>
-        <input type="password" [formControl]="signUpForm.controls['confirmPassword']"
-          [ngClass]="{'form-control-success':!signUpForm.hasError('mismatchedPasswords')}" 
+        <input type="password" [formControl]="commonFormGroup.controls['confirmPassword']"
+          [ngClass]="{'form-control-success':!commonFormGroup.hasError('mismatchedPasswords')}" 
           class="form-control form-control-success" id="confirmPassword" placeholder="Confirm Password">
-        <small class="form-text text-muted is-error"  *ngIf="signUpForm.hasError('mismatchedPasswords')
-          && signUpForm.controls['confirmPassword'].touched" >your does not match.</small>
+          <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['confirmPassword'].hasError('required') 
+          && commonFormGroup.controls['confirmPassword'].touched" >You can't leave this empty.</small>
+        <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.hasError('mismatchedPasswords')
+          && commonFormGroup.controls['confirmPassword'].touched" >These passwords don't match. Try again?</small>
+      </div>
+      
+
+      <div *ngIf="buddy" class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['emailId'].valid,
+            'has-danger':(!commonFormGroup.controls['emailId'].valid 
+            &&  commonFormGroup.controls['emailId'].touched)}">
+        <label class="form-control-label" for="emailId">Email ID:</label>
+        <input type="text" [formControl]="commonFormGroup.controls['emailId']"
+          [ngClass]="{'form-control-success':commonFormGroup.controls['emailId'].valid}" 
+          class="form-control form-control-success" id="emailId" placeholder="Email ID">
+          <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['emailId'].hasError('required') 
+          && commonFormGroup.controls['emailId'].touched" >You must Enter a Valid Email ID.</small>
+          <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['emailId'].touched 
+            && commonFormGroup.controls['emailId'].hasError('invalidEmail')" >You have entered an invalid email address!</small>
       </div>
 
-      <div class="form-group" [ngClass]="{'has-success':signUpForm.controls['firstName'].valid,'has-danger':(!signUpForm.controls['firstName'].valid &&  signUpForm.controls['firstName'].touched)}">
+      <div *ngIf="buddy" class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['status'].valid,
+            'has-danger':(!commonFormGroup.controls['status'].valid 
+            &&  commonFormGroup.controls['status'].touched)}">
+        <label class="form-control-label" for="status">Status:</label>
+        <input type="text" #stat [formControl]="commonFormGroup.controls['status']" (change)="stat.value = stat.value.toUpperCase()"
+          [ngClass]="{'form-control-success':commonFormGroup.controls['status'].valid}" 
+          class="form-control form-control-success" id="status" placeholder="Enter status in all caps">
+        <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['status'].hasError('required') 
+          && commonFormGroup.controls['status'].touched" >You have entered an invalid Status!</small>
+        <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['status'].touched 
+            && commonFormGroup.controls['status'].hasError('invalidStatus')" >
+            Enter a valid status (e.g. [IDEL, OFFLINE, AVAILABLE, BUSY, AWAY]).</small>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['firstName'].valid,
+        'has-danger':(!commonFormGroup.controls['firstName'].valid &&  commonFormGroup.controls['firstName'].touched)}">
         <label class="form-control-label" for="firstName">First Name:</label>
-        <input type="text" (keypress)="onlyText($event)" [formControl]="signUpForm.controls['firstName']" 
-          [ngClass]="{'form-control-success':signUpForm.controls['firstName'].valid}" 
+        <input type="text" (keypress)="onlyText($event)" [formControl]="commonFormGroup.controls['firstName']" 
+          [ngClass]="{'form-control-success':commonFormGroup.controls['firstName'].valid}" 
           class="form-control form-control-success" id="firstName" placeholder="First Name">
-        <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['firstName'].hasError('required') 
-          && signUpForm.controls['firstName'].touched" >You must Enter a First Name.</small>
+        <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['firstName'].hasError('required') 
+          && commonFormGroup.controls['firstName'].touched" >You must Enter a First Name.</small>
       </div>
 
-      <div class="form-group">
+       <div class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['lastName'].valid,
+        'has-danger':(!commonFormGroup.controls['lastName'].valid &&  commonFormGroup.controls['lastName'].touched)}">
         <label class="form-control-label" for="lastName">Last Name:</label>
-        <input type="text" (keypress)="onlyText($event)" [formControl]="signUpForm.controls['lastName']" 
-          class="form-control form-control-success" id="lastName" placeholder="Last Name">
+        <input type="text" (keypress)="onlyText($event)" [formControl]="commonFormGroup.controls['lastName']" 
+          [ngClass]="{'form-control-success':commonFormGroup.controls['lastName'].valid}" 
+          class="form-control form-control-success" id="lastName" placeholder="First Name">
+        <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['lastName'].hasError('required') 
+          && commonFormGroup.controls['lastName'].touched" >You must Enter a Last Name.</small>
       </div>
 
-       <div class="form-group" [ngClass]="{'has-success':signUpForm.controls['birthday'].valid,'has-danger':(!signUpForm.controls['birthday'].valid &&  signUpForm.controls['birthday'].touched)}">
+       <div class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['birthday'].valid,
+        'has-danger':(!commonFormGroup.controls['birthday'].valid &&  commonFormGroup.controls['birthday'].touched)}">
          <label class="form-control-label" for="birthday">Birthday:</label>
          <my-date-picker name="birthday" [options]="birthdayPickerOptions" formControlName="birthday"></my-date-picker>
-         <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['birthday'].hasError('required')
-          && signUpForm.controls['birthday'].touched" >You must Enter a Date.</small>
-         <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['birthday'].touched 
-          && signUpForm.controls['birthday'].hasError('invalidDate')">Enter a Proper Date.</small>
+         <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['birthday'].touched
+          && commonFormGroup.controls['birthday'].hasError('required')" >You can't leave this empty.</small>
+         <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['birthday'].touched 
+          && commonFormGroup.controls['birthday'].hasError('invalidDate')">The date doesn't look right. Be sure to use your actual date of birth</small>
       </div>
 
       <div class="form-group">
-        <button type="submit" class="btn btn-default"  [disabled]='!signUpForm.valid'>Submit</button>
+        <button type="submit" class="btn btn-default"  [disabled]='!commonFormGroup.valid'>Submit</button>
       </div>
     </form>
-    <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" 
+    <div *ngIf="signIn" bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" 
       aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -73,6 +111,6 @@
           </div>
       </div>
     </div>
-  </div>
+</div>
 
   

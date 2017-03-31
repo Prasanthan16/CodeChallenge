@@ -1,78 +1,19 @@
 <div class="jumbotron">
-    <h2>Sign Up !!!</h2>
-    <form [formGroup]="signUpForm" (ngSubmit)="submitForm(signUpForm.value)">
-      <div class="form-group" [ngClass]="{'has-success':signUpForm.controls['userName'].valid,'has-danger':(!signUpForm.controls['userName'].valid &&  signUpForm.controls['userName'].touched)}">
-        <label class="form-control-label" for="userName">User Name:</label>
-        <input type="text" [formControl]="signUpForm.controls['userName']"
-          [ngClass]="{'form-control-success':signUpForm.controls['userName'].valid}" 
-          class="form-control form-control-success" id="userName" placeholder="Enter your User Name (example@mail.com)">
-        <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['userName'].hasError('required') 
-          && signUpForm.controls['userName'].touched" >You must Enter a UserName.</small>
-        <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['userName'].hasError('invalidEmail') 
-          && signUpForm.controls['userName'].touched" >Username should a valid Email ID</small>
-      </div>
-
-      <div class="form-group" [ngClass]="{'has-success':signUpForm.controls['password'].valid,'has-danger':(!signUpForm.controls['password'].valid &&  signUpForm.controls['password'].touched)}">
-        <label class="form-control-label" for="password">Password:</label>
-        <input type="password" [formControl]="signUpForm.controls['password']" 
-          [ngClass]="{'form-control-success':signUpForm.controls['password'].valid}" 
-          class="form-control form-control-success" id="password" placeholder="Password">
-        <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['password'].hasError('required') 
-          && signUpForm.controls['password'].touched" >You must Enter a password.</small>
-          <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['password'].hasError('minlength') 
-          && signUpForm.controls['password'].touched" >Password should be atleast six character.</small>
-      </div>
-
-      <div class="form-group" [ngClass]="{'has-success':((!signUpForm.controls['confirmPassword'].touched) && signUpForm.controls['confirmPassword'].valid && signUpForm.hasError('mismatchedPasswords')),'has-danger':(signUpForm.hasError('mismatchedPasswords') &&  signUpForm.controls['confirmPassword'].touched)}">
-        <label class="form-control-label" for="confirmPassword">Confirm Password:</label>
-        <input type="password" [formControl]="signUpForm.controls['confirmPassword']"
-          [ngClass]="{'form-control-success':!signUpForm.hasError('mismatchedPasswords')}" 
-          class="form-control form-control-success" id="confirmPassword" placeholder="Confirm Password">
-        <small class="form-text text-muted is-error"  *ngIf="signUpForm.hasError('mismatchedPasswords')
-          && signUpForm.controls['confirmPassword'].touched" >your does not match.</small>
-      </div>
-
-      <div class="form-group" [ngClass]="{'has-success':signUpForm.controls['firstName'].valid,'has-danger':(!signUpForm.controls['firstName'].valid &&  signUpForm.controls['firstName'].touched)}">
-        <label class="form-control-label" for="firstName">First Name:</label>
-        <input type="text" (keypress)="onlyText($event)" [formControl]="signUpForm.controls['firstName']" 
-          [ngClass]="{'form-control-success':signUpForm.controls['firstName'].valid}" 
-          class="form-control form-control-success" id="firstName" placeholder="First Name">
-        <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['firstName'].hasError('required') 
-          && signUpForm.controls['firstName'].touched" >You must Enter a First Name.</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-control-label" for="lastName">Last Name:</label>
-        <input type="text" (keypress)="onlyText($event)" [formControl]="signUpForm.controls['lastName']" 
-          class="form-control form-control-success" id="lastName" placeholder="Last Name">
-      </div>
-
-       <div class="form-group" [ngClass]="{'has-success':signUpForm.controls['birthday'].valid,'has-danger':(!signUpForm.controls['birthday'].valid &&  signUpForm.controls['birthday'].touched)}">
-         <label class="form-control-label" for="birthday">Birthday:</label>
-         <my-date-picker name="birthday" [options]="birthdayPickerOptions" formControlName="birthday"></my-date-picker>
-         <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['birthday'].hasError('required')
-          && signUpForm.controls['birthday'].touched" >You must Enter a Date.</small>
-         <small class="form-text text-muted is-error"  *ngIf="signUpForm.controls['birthday'].touched 
-          && signUpForm.controls['birthday'].hasError('invalidDate')">Enter a Proper Date.</small>
-      </div>
-
-      <div class="form-group">
-        <button type="submit" class="btn btn-default"  [disabled]='!signUpForm.valid'>Submit</button>
-      </div>
-    </form>
-    <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" 
-      aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-          <div class="modal-body">
-            <div class="center">
-              <h2>Successfully Signed up!!</h2>
-              <button type="button" class="btn btn-default" (click)="confirm()">OK</button>
-            </div>
+  <h2>Sign Up !!!</h2>
+  <user-form [onSubmit]="submitForm" [confirm]="confirm" [formLable]="callForm" (onEnd)="onEnd($event)"></user-form>
+  <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" 
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-body">
+          <div class="center">
+            <h2>Successfully Signed up!!</h2>
+            <button type="button" class="btn btn-default" (click)="confirm()">OK</button>
           </div>
-          </div>
-      </div>
+        </div>
+        </div>
     </div>
   </div>
+</div>
 
   

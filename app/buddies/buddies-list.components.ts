@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {IBuddy} from '../api/buddy/buddy';
 import {BuddyService} from '../service/buddy/buddy.http.service';
 
-
-
 @Component({
     templateUrl: 'app/buddies/buddies-list.component.html',
     providers:[BuddyService]
@@ -15,13 +13,13 @@ export class BuddiesListComponent implements OnInit{
     filterBy : string;
     filterData: IBuddy[];
     errorMessage: string;
+    callForm: string = "Buddy";
     constructor(private _buddyService: BuddyService){};
     public max:number = 5;
     public isReadonly:boolean = false;
     
     public overStar:number;
     public percent:number;
-    
     public hoveringOver(value:number):void {
         this.overStar = value;
         this.percent = 100 * (value / this.max);
@@ -29,6 +27,11 @@ export class BuddiesListComponent implements OnInit{
     
     public resetStar():void {
         this.overStar = void 0;
+    }
+    callAccordion(event:any):void{
+        if(event.target.id == "" && event.target.id !== "parent"){
+            event.stopPropagation()
+        }
     }
     deleteBuddy(index: number){
         var tmp = Object.create(this.filterData);
