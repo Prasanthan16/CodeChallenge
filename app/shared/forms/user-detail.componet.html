@@ -23,9 +23,11 @@
           && commonFormGroup.controls['password'].touched" >Password should be atleast six character.</small>
       </div>
 
-      <div *ngIf="signIn" class="form-group" [ngClass]="{'has-success':(commonFormGroup.controls['confirmPassword'].valid),
-      'has-danger':(!commonFormGroup.controls['confirmPassword'].valid
-        &&  commonFormGroup.controls['confirmPassword'].touched)}">
+      <div *ngIf="signIn" class="form-group" [ngClass]="{'has-success':(commonFormGroup.controls['confirmPassword'].valid 
+        && !commonFormGroup.hasError('mismatchedPasswords')),
+        'has-danger':(commonFormGroup.controls['confirmPassword'].touched 
+        && !commonFormGroup.controls['confirmPassword'].valid
+        && commonFormGroup.hasError('mismatchedPasswords'))}">
         <label class="form-control-label" for="confirmPassword">Confirm Password:</label>
         <input type="password" [formControl]="commonFormGroup.controls['confirmPassword']"
           [ngClass]="{'form-control-success':!commonFormGroup.hasError('mismatchedPasswords')}" 
