@@ -8,11 +8,30 @@
             <add-bud  [parentData]="filterData"  [formLable]="'buddy'" (onAdd)="filterData=$event;buddies=$event"></add-bud>
         </div>
     </div>
+    <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" 
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Confirmation</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="lgModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <div class="center">
+                <h2>Are you sure, you want to delete your Buddy!!!</h2>
+                <button type="button" class="btn btn-default" (click)="confirmDelete()"> Confirm </button>
+            </div>
+            </div>
+        </div>
+    </div>
+  </div>
     <template #buddyTemplate let-bud="item" let-index="index">
         <accordion>
             <accordion-group #group >
             <div accordion-heading id="parent" (click)="callAccordion($event)">
-                <i (click)="deleteBuddy(index)" class="glyphicon glyphicon-remove"></i>
+                <i (click)="openConfirm(index)" class="glyphicon glyphicon-remove"></i>
                 {{bud.value.userName}}
                 <rating id="child" [(ngModel)]="bud.value.star" [max]="max" [readonly]="isReadonly"
                     (onHover)="hoveringOver($event)" (onLeave)="resetStar()"

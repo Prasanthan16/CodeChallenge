@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {IBuddy} from '../api/buddy/buddy';
 import {BuddyService} from '../service/buddy/buddy.http.service';
 
@@ -14,6 +14,8 @@ export class BuddiesListComponent implements OnInit{
     filterData: IBuddy[];
     errorMessage: string;
     callForm: string = "Buddy";
+    index: number;
+    @ViewChild('lgModal') lgModal:any;
     constructor(private _buddyService: BuddyService){};
     public max:number = 5;
     public isReadonly:boolean = false;
@@ -33,10 +35,18 @@ export class BuddiesListComponent implements OnInit{
             event.stopPropagation()
         }
     }
-    deleteBuddy(index: number){
-        var tmp = Object.create(this.filterData);
-        tmp.splice(index, 1);
-        this.filterData = tmp;
+    openConfirm(index: number){
+        this.lgModal.show();
+        this.index = index;
+    }
+    confirmDelete(){
+        if(this.index !== undefined && this.index !== null){
+            var tmp = Object.create(this.filterData);
+            tmp.splice(this.index, 1);
+            this.filterData = tmp;
+            this.index = undefined;
+            this.lgModal.hide();
+        } 
     }
     getBuddies(): void {
         this._buddyService.getBuddies()
