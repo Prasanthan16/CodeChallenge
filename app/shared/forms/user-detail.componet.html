@@ -1,14 +1,19 @@
 <div>
     <form [formGroup]="commonFormGroup" (ngSubmit)="onFormSubmit(commonFormGroup.value)">
-      <div class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['userName'].valid,'has-danger':(!commonFormGroup.controls['userName'].valid &&  commonFormGroup.controls['userName'].touched)}">
+      <div class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['userName'].valid,
+        'has-danger':(!commonFormGroup.controls['userName'].valid 
+          && commonFormGroup.controls['userName'].touched 
+          && commonFormGroup.controls['userName'].hasError('maxlength'))}" >
         <label class="form-control-label" for="userName">User Name:</label>
         <input type="text" [formControl]="commonFormGroup.controls['userName']"
           [ngClass]="{'form-control-success':commonFormGroup.controls['userName'].valid}" 
-          class="form-control form-control-success" id="userName" placeholder="Enter your User Name (example@mail.com)">
+          class="form-control form-control-success" id="userName" placeholder="Enter your User Name">
         <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['userName'].hasError('required') 
           && commonFormGroup.controls['userName'].touched" >You must Enter a UserName.</small>
         <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['userName'].hasError('invalidEmail') 
-          && commonFormGroup.controls['userName'].touched" >Username should a valid Email ID</small>
+          && commonFormGroup.controls['userName'].touched && signIn" >Username should a valid Email ID</small>
+          <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['userName'].hasError('maxlength') 
+          && commonFormGroup.controls['userName'].touched" >UserName should be under 56 character.</small>
       </div>
 
       <div *ngIf="signIn" class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['password'].valid,
