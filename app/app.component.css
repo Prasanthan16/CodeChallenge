@@ -8,3 +8,7 @@ div.panel-heading {
 .hudWidth{
     width: 100%;
 }
+.dob input.selection {
+    text-align: left;
+    padding-left: 10px;
+}

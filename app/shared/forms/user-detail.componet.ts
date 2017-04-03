@@ -27,20 +27,21 @@ export class CommonFormComponet implements OnInit{
     @Output() onEnd = new EventEmitter<IBuddy[]>();
     constructor(fb: FormBuilder, private router: Router, private route: ActivatedRoute){
         this.commonFormGroup = fb.group({
-            'userName' : [null, Validators.compose([Validators.required, Validators.maxLength(56), EmailValidator])],
-            'firstName' : [null, Validators.required],
-            'lastName' : [null, Validators.required],
-            'birthday' :[null, Validators.compose([Validators.required, DateValidator])]
+            "userName" : [null, Validators.compose([Validators.required, Validators.maxLength(56), EmailValidator])],
+            "firstName" : [null, Validators.required],
+            "birthday" :[null, Validators.compose([Validators.required, DateValidator])]
         });
     }
     ngOnInit(): void{
             console.log("there");
             if(this.formLable === FORM_TYPE.SIGN_IN){
+                this.commonFormGroup.addControl("lastName", new FormControl(null));
                 this.commonFormGroup.addControl("password", new FormControl(null, Validators.compose([Validators.required, Validators.minLength(6)])));
                 this.commonFormGroup.addControl("confirmPassword", new FormControl(null, Validators.required));
                 this.commonFormGroup.setValidators(MatchingPasswords('password', 'confirmPassword'));
                 this.signIn = true;
             } else if (this.formLable === FORM_TYPE.BUDDY) {
+                this.commonFormGroup.addControl("lastName", new FormControl(null, Validators.required));
                 this.commonFormGroup.addControl("emailId", new FormControl(null, Validators.compose([Validators.required, EmailValidator])));
                 this.commonFormGroup.addControl("status", new FormControl(null, Validators.compose([Validators.required, ProperStatus])));
                 this.buddy = true;

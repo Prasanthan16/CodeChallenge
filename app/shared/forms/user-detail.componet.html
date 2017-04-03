@@ -76,20 +76,20 @@
           && commonFormGroup.controls['firstName'].touched" >You must Enter a First Name.</small>
       </div>
 
-       <div class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['lastName'].valid,
-        'has-danger':(!commonFormGroup.controls['lastName'].valid &&  commonFormGroup.controls['lastName'].touched)}">
+       <div class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['lastName'].valid && buddy,
+        'has-danger':(!commonFormGroup.controls['lastName'].valid &&  commonFormGroup.controls['lastName'].touched && buddy)}">
         <label class="form-control-label" for="lastName">Last Name:</label>
         <input type="text" (keypress)="onlyText($event)" [formControl]="commonFormGroup.controls['lastName']" 
           [ngClass]="{'form-control-success':commonFormGroup.controls['lastName'].valid}" 
           class="form-control form-control-success" id="lastName" placeholder="First Name">
         <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['lastName'].hasError('required') 
-          && commonFormGroup.controls['lastName'].touched" >You must Enter a Last Name.</small>
+          && commonFormGroup.controls['lastName'].touched && buddy" >You must Enter a Last Name.</small>
       </div>
 
        <div class="form-group" [ngClass]="{'has-success':commonFormGroup.controls['birthday'].valid,
         'has-danger':(!commonFormGroup.controls['birthday'].valid &&  commonFormGroup.controls['birthday'].touched)}">
          <label class="form-control-label" for="birthday">Birthday:</label>
-         <my-date-picker name="birthday" [options]="birthdayPickerOptions" formControlName="birthday"></my-date-picker>
+         <my-date-picker class="dob" name="birthday" [options]="birthdayPickerOptions" formControlName="birthday"></my-date-picker>
          <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['birthday'].touched
           && commonFormGroup.controls['birthday'].hasError('required')" >You can't leave this empty.</small>
          <small class="form-text text-muted is-error"  *ngIf="commonFormGroup.controls['birthday'].touched 
@@ -114,5 +114,3 @@
       </div>
     </div>
 </div>
-
-  
